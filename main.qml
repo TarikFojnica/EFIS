@@ -38,7 +38,7 @@ Window {
                     layoutDirection: Qt.RightToLeft
 
                     Item {
-                        id: item1
+                        id: warning_text
                         x: 85
                         width: 214
                         height: 90
@@ -80,11 +80,11 @@ Window {
                     }
 
                     Item {
-                        id: item3
+                        id: warning_icon_container
                         anchors.fill: parent
 
                         Image {
-                            id: image
+                            id: warning_icon
                             x: 10
                             y: 10
                             width: 64
@@ -106,14 +106,14 @@ Window {
                 opacity: 1
 
                 Item {
-                    id: item2
+                    id: weather_container
                     x: 0
                     y: 0
                     width: 230
                     height: 90
 
                     Text {
-                        id: text4
+                        id: wind_data
                         x: 12
                         y: 46
                         width: 218
@@ -130,7 +130,7 @@ Window {
                     }
 
                     Text {
-                        id: text5
+                        id: weather_data
                         x: 12
                         y: 0
                         width: 218
@@ -156,13 +156,27 @@ Window {
                 color: "#222222"
                 radius: 1
                 opacity: 1
+
                 Row {
-                    id: row1
+                    id: landing_take_off_container
                     height: 85
                     spacing: 0
                     anchors.fill: parent
                     layoutDirection: Qt.LeftToRight
+
+                    Item {
+                        id: landing
+                        width: 115
+                        height: 90
+                    }
+
+                    Item {
+                        id: take_off
+                        width: 115
+                        height: 90
+                    }
                 }
+
                 border.color: "#3f3f3f"
             }
         }
