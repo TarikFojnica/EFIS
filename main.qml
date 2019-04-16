@@ -15,6 +15,7 @@ Window {
         y: 10
         width: 780
         height: 460
+        spacing: 10
         rows: 2
 
         Row {
@@ -200,6 +201,12 @@ Window {
 
                 border.color: "#3f3f3f"
             }
+        }
+
+        Row {
+            id: botto_row
+            width: 780
+            height: 360
         }
     }
 }
