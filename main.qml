@@ -204,9 +204,36 @@ Window {
         }
 
         Row {
-            id: botto_row
+            id: bottom_row
             width: 780
             height: 360
+
+            Rectangle {
+                id: rectangle
+                width: 300
+                height: 360
+                color: "#000000"
+                radius: 0
+                antialiasing: true
+                border.width: 0
+                clip: true
+
+                Image {
+                    id: image2
+                    x: 0
+                    y: -180
+                    width: 300
+                    scale: 1.4
+                    rotation: 4
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    antialiasing: true
+                    fillMode: Image.Stretch
+                    clip: false
+                    sourceSize.width: 0
+                    source: "virtual_horizont.png"
+                }
+            }
         }
     }
 }

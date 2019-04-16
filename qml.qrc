@@ -5,5 +5,6 @@
         <file>landing.png</file>
         <file>take-off.png</file>
         <file>alert.png</file>
+        <file>virtual_horizont.png</file>
     </qresource>
 </RCC>
