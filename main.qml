@@ -7,6 +7,7 @@ Window {
     width: 800
     height: 480
     color: "#000000"
+    property alias virtual_horizon_container: virtual_horizon_container
     title: qsTr("Electronic Flight Instrument System")
 
     Grid {
@@ -207,24 +208,28 @@ Window {
             id: bottom_row
             width: 780
             height: 360
+            layoutDirection: Qt.LeftToRight
+            spacing: 20
 
             Rectangle {
-                id: rectangle
+                id: virtual_horizon_container
                 width: 300
                 height: 360
                 color: "#000000"
                 radius: 0
+                scale: 1
+                rotation: 0
                 antialiasing: true
                 border.width: 0
                 clip: true
 
                 Image {
-                    id: image2
+                    id: virtual_horizon
                     x: 0
                     y: -180
                     width: 300
-                    scale: 1.4
-                    rotation: 4
+                    scale: 1.6
+                    rotation: 17
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     antialiasing: true
@@ -232,6 +237,32 @@ Window {
                     clip: false
                     sourceSize.width: 0
                     source: "virtual_horizont.png"
+                }
+            }
+
+            Item {
+                id: vertical_item
+                width: 140
+                height: 360
+
+                Rectangle {
+                    id: rectangle
+                    x: 50
+                    y: 0
+                    width: 25
+                    height: 360
+                    radius: 11
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0
+                            color: "#26b7e9"
+                        }
+
+                        GradientStop {
+                            position: 1
+                            color: "#b95200"
+                        }
+                    }
                 }
             }
         }
