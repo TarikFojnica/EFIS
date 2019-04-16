@@ -68,7 +68,7 @@ Window {
                             width: 214
                             height: 32
                             color: "#ff7272"
-                            text: qsTr("Airspeed to low!")
+                            text: qsTr("Airspeed too low!")
                             font.weight: Font.Bold
                             fontSizeMode: Text.FixedSize
                             textFormat: Text.AutoText
@@ -76,6 +76,20 @@ Window {
                             verticalAlignment: Text.AlignVCenter
                             font.pixelSize: 23
                             font.family: "Tahoma"
+                        }
+                    }
+
+                    Item {
+                        id: item3
+                        anchors.fill: parent
+
+                        Image {
+                            id: image
+                            x: 10
+                            y: 10
+                            width: 64
+                            height: 64
+                            source: "warning.png"
                         }
                     }
                 }

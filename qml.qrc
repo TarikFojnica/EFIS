@@ -4,5 +4,6 @@
         <file>warning.png</file>
         <file>landing.png</file>
         <file>take-off.png</file>
+        <file>alert.png</file>
     </qresource>
 </RCC>
