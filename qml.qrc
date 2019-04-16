@@ -7,5 +7,8 @@
         <file>alert.png</file>
         <file>virtual_horizont.png</file>
         <file>altitude.png</file>
+        <file>speedometer.png</file>
+        <file>battery.png</file>
+        <file>propeller.png</file>
     </qresource>
 </RCC>

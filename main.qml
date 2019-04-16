@@ -7,7 +7,6 @@ Window {
     width: 800
     height: 480
     color: "#000000"
-    property alias virtual_horizon_container: virtual_horizon_container
     title: qsTr("Electronic Flight Instrument System")
 
     Grid {
@@ -195,18 +194,19 @@ Window {
             width: 780
             height: 360
             layoutDirection: Qt.LeftToRight
-            spacing: 20
+            spacing: 10
 
             Rectangle {
                 id: virtual_horizon_container
                 width: 300
                 height: 360
                 color: "#000000"
-                radius: 0
+                radius: 27
+                border.color: "#ae1515"
                 scale: 1
                 rotation: 0
                 antialiasing: true
-                border.width: 0
+                border.width: 10
                 clip: true
 
                 Image {
@@ -227,11 +227,10 @@ Window {
             }
 
             Item {
-                id: vertical_item
+                id: vertical_item_1
+                x: 320
                 width: 140
                 height: 360
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
 
                 Rectangle {
                     id: rectangle
@@ -239,7 +238,7 @@ Window {
                     y: 0
                     width: 20
                     height: 360
-                    radius: 1
+                    radius: 2
                     gradient: Gradient {
                         GradientStop {
                             position: 0
@@ -256,7 +255,7 @@ Window {
                         id: rectangle1
                         x: 0
                         y: 316
-                        width: 113
+                        width: 89
                         height: 32
                         color: "#00000000"
                         opacity: 1
@@ -267,14 +266,15 @@ Window {
                             id: text3
                             x: 29
                             y: 0
-                            width: 84
+                            width: 68
                             height: 32
                             color: "#fdfdfd"
                             text: qsTr("5.432")
+                            horizontalAlignment: Text.AlignLeft
                             font.bold: false
                             verticalAlignment: Text.AlignVCenter
                             anchors.verticalCenterOffset: 0
-                            anchors.horizontalCenterOffset: 14
+                            anchors.horizontalCenterOffset: 10
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
                             font.family: "Courier"
@@ -291,6 +291,151 @@ Window {
                     height: 40
                     opacity: 0.5
                     source: "altitude.png"
+                }
+            }
+
+            Item {
+                id: vertical_item_2
+                x: 480
+                width: 140
+                height: 360
+                Rectangle {
+                    id: rectangle3
+                    x: 50
+                    y: 0
+                    width: 20
+                    height: 360
+                    radius: 10
+                    rotation: 0
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0.732
+                            color: "#22353d"
+                        }
+
+                        GradientStop {
+                            position: 0.998
+                            color: "#fe1717"
+                        }
+                    }
+                    border.color: "#dadae1"
+                    Rectangle {
+                        id: rectangle2
+                        x: 0
+                        y: 200
+                        width: 89
+                        height: 32
+                        color: "#00000000"
+                        Text {
+                            id: text4
+                            x: 29
+                            y: 0
+                            width: 68
+                            height: 32
+                            color: "#fdfdfd"
+                            text: qsTr("70.2")
+                            font.bold: false
+                            anchors.verticalCenterOffset: 0
+                            horizontalAlignment: Text.AlignLeft
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: 19
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenterOffset: 10
+                            verticalAlignment: Text.AlignVCenter
+                            font.family: "Courier"
+                        }
+                        border.color: "#ffffff"
+                        border.width: 2
+                        opacity: 1
+                    }
+                }
+
+                Image {
+                    id: image3
+                    x: 0
+                    y: 310
+                    width: 40
+                    height: 40
+                    opacity: 0.5
+                    source: "speedometer.png"
+                }
+            }
+
+            Item {
+                id: vertical_item_3
+                x: 640
+                width: 140
+                height: 360
+                Rectangle {
+                    id: rectangle5
+                    x: 50
+                    y: 0
+                    width: 20
+                    height: 360
+                    radius: 10
+                    border.color: "#dadae1"
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0
+                            color: "#ed1b1b"
+                        }
+
+                        GradientStop {
+                            position: 0.33
+                            color: "#22353d"
+                        }
+
+                        GradientStop {
+                            position: 0.583
+                            color: "#22353d"
+                        }
+
+                        GradientStop {
+                            position: 1
+                            color: "#22353d"
+                        }
+
+
+                    }
+                    Rectangle {
+                        id: rectangle4
+                        x: 0
+                        y: 162
+                        width: 89
+                        height: 32
+                        color: "#00000000"
+                        Text {
+                            id: text5
+                            x: 29
+                            y: 0
+                            width: 68
+                            height: 32
+                            color: "#fdfdfd"
+                            text: qsTr("50%")
+                            font.bold: false
+                            anchors.verticalCenterOffset: 0
+                            horizontalAlignment: Text.AlignLeft
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: 19
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenterOffset: 10
+                            font.family: "Courier"
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        border.color: "#ffffff"
+                        border.width: 2
+                        opacity: 1
+                    }
+                }
+
+                Image {
+                    id: image4
+                    x: 0
+                    y: 310
+                    width: 40
+                    height: 40
+                    opacity: 0.5
+                    source: "propeller.png"
                 }
             }
         }
