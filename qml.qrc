@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>warning.png</file>
+        <file>landing.png</file>
+        <file>take-off.png</file>
     </qresource>
 </RCC>

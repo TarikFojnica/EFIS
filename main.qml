@@ -20,7 +20,8 @@ Window {
         Row {
             id: upper_panel
             width: 780
-            height: 110
+            height: 90
+            spacing: 10
 
             Rectangle {
                 id: warning_block
@@ -33,10 +34,7 @@ Window {
 
                 Row {
                     id: row
-                    x: 0
-                    y: 0
-                    width: 300
-                    height: 90
+                    anchors.fill: parent
                     layoutDirection: Qt.RightToLeft
 
                     Item {
@@ -81,6 +79,77 @@ Window {
                         }
                     }
                 }
+            }
+
+            Rectangle {
+                id: weather
+                x: 300
+                y: 0
+                width: 230
+                height: 90
+                color: "#222222"
+                radius: 1
+                opacity: 1
+
+                Item {
+                    id: item2
+                    x: 0
+                    y: 0
+                    width: 230
+                    height: 90
+
+                    Text {
+                        id: text4
+                        x: 12
+                        y: 46
+                        width: 218
+                        height: 44
+                        color: "#ffffff"
+                        text: qsTr("2MPH Southwest")
+                        font.weight: Font.Bold
+                        fontSizeMode: Text.FixedSize
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignLeft
+                        textFormat: Text.AutoText
+                        font.family: "Tahoma"
+                        font.pixelSize: 23
+                    }
+
+                    Text {
+                        id: text5
+                        x: 12
+                        y: 0
+                        width: 218
+                        height: 44
+                        color: "#ffffff"
+                        text: qsTr("10°C Sunny")
+                        font.weight: Font.Bold
+                        fontSizeMode: Text.FixedSize
+                        textFormat: Text.AutoText
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+                        font.pixelSize: 23
+                        font.family: "Tahoma"
+                    }
+                }
+                border.color: "#3f3f3f"
+            }
+
+            Rectangle {
+                id: landing_take_off
+                width: 230
+                height: 90
+                color: "#222222"
+                radius: 1
+                opacity: 1
+                Row {
+                    id: row1
+                    height: 85
+                    spacing: 0
+                    anchors.fill: parent
+                    layoutDirection: Qt.LeftToRight
+                }
+                border.color: "#3f3f3f"
             }
         }
     }
