@@ -53,6 +53,8 @@ Window {
                             height: 53
                             color: "#ff7272"
                             text: qsTr("PULL UP!")
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
                             font.capitalization: Font.SmallCaps
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignLeft
@@ -61,23 +63,6 @@ Window {
                             fontSizeMode: Text.FixedSize
                             font.family: "Tahoma"
                             font.pixelSize: 40
-                        }
-
-                        Text {
-                            id: text2
-                            x: 0
-                            y: 49
-                            width: 214
-                            height: 32
-                            color: "#ff7272"
-                            text: qsTr("Airspeed too low!")
-                            font.weight: Font.Bold
-                            fontSizeMode: Text.FixedSize
-                            textFormat: Text.AutoText
-                            horizontalAlignment: Text.AlignLeft
-                            verticalAlignment: Text.AlignVCenter
-                            font.pixelSize: 23
-                            font.family: "Tahoma"
                         }
                     }
 
@@ -91,6 +76,7 @@ Window {
                             y: 10
                             width: 64
                             height: 64
+                            anchors.verticalCenter: parent.verticalCenter
                             source: "warning.png"
                         }
                     }
@@ -244,14 +230,16 @@ Window {
                 id: vertical_item
                 width: 140
                 height: 360
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Rectangle {
                     id: rectangle
                     x: 50
                     y: 0
-                    width: 25
+                    width: 20
                     height: 360
-                    radius: 11
+                    radius: 1
                     gradient: Gradient {
                         GradientStop {
                             position: 0
@@ -263,6 +251,46 @@ Window {
                             color: "#b95200"
                         }
                     }
+
+                    Rectangle {
+                        id: rectangle1
+                        x: 0
+                        y: 316
+                        width: 113
+                        height: 32
+                        color: "#00000000"
+                        opacity: 1
+                        border.width: 2
+                        border.color: "#ffffff"
+
+                        Text {
+                            id: text3
+                            x: 29
+                            y: 0
+                            width: 84
+                            height: 32
+                            color: "#fdfdfd"
+                            text: qsTr("5.432")
+                            font.bold: false
+                            verticalAlignment: Text.AlignVCenter
+                            anchors.verticalCenterOffset: 0
+                            anchors.horizontalCenterOffset: 14
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.family: "Courier"
+                            font.pixelSize: 19
+                        }
+                    }
+                }
+
+                Image {
+                    id: image2
+                    x: 0
+                    y: 310
+                    width: 40
+                    height: 40
+                    opacity: 0.5
+                    source: "altitude.png"
                 }
             }
         }

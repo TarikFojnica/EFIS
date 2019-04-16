@@ -6,5 +6,6 @@
         <file>take-off.png</file>
         <file>alert.png</file>
         <file>virtual_horizont.png</file>
+        <file>altitude.png</file>
     </qresource>
 </RCC>
