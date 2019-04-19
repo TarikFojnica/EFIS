@@ -10,5 +10,7 @@
         <file>speedometer.png</file>
         <file>battery.png</file>
         <file>propeller.png</file>
+        <file>Layer 1.png</file>
+        <file>angles.png</file>
     </qresource>
 </RCC>
