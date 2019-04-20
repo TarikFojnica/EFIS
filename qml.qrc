@@ -13,5 +13,6 @@
         <file>Layer 1.png</file>
         <file>angles.png</file>
         <file>caret-arrow-up.png</file>
+        <file>vertical_angle.png</file>
     </qresource>
 </RCC>

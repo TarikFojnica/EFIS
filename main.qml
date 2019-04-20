@@ -51,7 +51,7 @@ Window {
                             width: 214
                             height: 53
                             color: "#df1c1c"
-                            text: qsTr("LANDING")
+                            text: qsTr("pull up")
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                             font.capitalization: Font.SmallCaps
@@ -264,7 +264,7 @@ Window {
                 Item {
                     id: dynamic
                     x: 0
-                    y: 1
+                    y: 0
                     width: 300
                     height: 359
                     rotation: 0
@@ -298,7 +298,7 @@ Window {
                 Rectangle {
                     id: fixed_center
                     x: 50
-                    y: 179
+                    y: 178
                     width: 200
                     height: 4
                     color: "#ffffff"
@@ -311,6 +311,15 @@ Window {
                     width: 300
                     height: 100
                     source: "angles.png"
+                }
+
+                Image {
+                    id: fixed_vertical_angle
+                    x: 95
+                    y: 90
+                    width: 110
+                    height: 169
+                    source: "vertical_angle.png"
                 }
 
             }
