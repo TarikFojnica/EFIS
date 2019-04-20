@@ -228,7 +228,7 @@ Window {
                     x: 44
                     y: 334
                     color: "#ffffff"
-                    text: qsTr("Knot")
+                    text: qsTr("Knots")
                     opacity: 0.7
                     font.family: "Courier"
                     font.pixelSize: 19
@@ -267,6 +267,7 @@ Window {
                     y: 0
                     width: 300
                     height: 359
+                    z: 0
                     rotation: 0
 
                     Image {
@@ -315,10 +316,10 @@ Window {
 
                 Image {
                     id: fixed_vertical_angle
-                    x: 95
-                    y: 90
-                    width: 110
-                    height: 169
+                    x: 92
+                    y: 80
+                    width: 116
+                    height: 189
                     source: "vertical_angle.png"
                 }
 
@@ -407,7 +408,7 @@ Window {
                     x: 44
                     y: 334
                     color: "#ffffff"
-                    text: qsTr("Feet")
+                    text: qsTr("Feets")
                     opacity: 0.7
                     font.family: "Courier"
                     font.pixelSize: 19
