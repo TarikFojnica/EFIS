@@ -154,6 +154,7 @@ Window {
                     y: 8
                     width: 25
                     height: 300
+                    color: "#19727d"
                     radius: 10
                     gradient: Gradient {
                         GradientStop {
@@ -260,28 +261,58 @@ Window {
                 border.width: 10
                 clip: true
 
-                Image {
-                    id: virtual_horizon
+                Item {
+                    id: dynamic
                     x: 0
-                    y: -180
+                    y: 1
                     width: 300
-                    scale: 1.6
-                    rotation: -27
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    antialiasing: true
-                    fillMode: Image.Stretch
-                    clip: false
-                    sourceSize.width: 0
-                    source: "virtual_horizont.png"
+                    height: 359
+                    rotation: 0
+
+                    Image {
+                        id: horizon
+                        x: 0
+                        y: -71
+                        width: 300
+                        scale: 1.6
+                        rotation: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        antialiasing: true
+                        fillMode: Image.Stretch
+                        clip: false
+                        sourceSize.width: 0
+                        source: "virtual_horizont.png"
+                    }
+
+                    Image {
+                        id: image2
+                        x: 140
+                        y: 13
+                        width: 20
+                        height: 62
+                        source: "caret-arrow-up.png"
+                    }
+                }
+
+                Rectangle {
+                    id: fixed_center
+                    x: 50
+                    y: 179
+                    width: 200
+                    height: 4
+                    color: "#ffffff"
                 }
 
                 Image {
-                    id: image2
+                    id: fixed_angle
+                    x: 0
+                    y: 3
                     width: 300
                     height: 100
                     source: "angles.png"
                 }
+
             }
 
             Item {
