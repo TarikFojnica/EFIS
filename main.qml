@@ -20,7 +20,7 @@ Window {
 
         Row {
             id: upper_panel
-            width: 780
+            width: 500
             height: 90
             spacing: 10
 
@@ -266,14 +266,14 @@ Window {
                     x: 0
                     y: 0
                     width: 300
-                    height: 359
+                    height: 360
                     z: 0
                     rotation: 0
 
                     Image {
                         id: horizon
                         x: 0
-                        y: -71
+                        y: 0
                         width: 300
                         scale: 1.6
                         rotation: 0
@@ -289,7 +289,7 @@ Window {
                     Image {
                         id: image2
                         x: 140
-                        y: 13
+                        y: 29
                         width: 20
                         height: 62
                         source: "caret-arrow-up.png"
@@ -340,7 +340,7 @@ Window {
                     Rectangle {
                         id: value1
                         x: 0
-                        y: 120
+                        y: 101
                         width: 97
                         height: 32
                         color: "#b3000000"
@@ -442,20 +442,72 @@ Window {
                     spacing: 20
 
                     Rectangle {
-                        id: rectangle
+                        id: compass
                         width: 190
                         height: 170
-                        color: "#191919"
+                        color: "#000000"
+
+                        Image {
+                            id: compass_dynamic
+                            width: 100
+                            height: 100
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            source: "compass_dynamic.png"
+                            fillMode: Image.PreserveAspectFit
+                        }
+
+                        Image {
+                            id: image6
+                            width: 190
+                            height: 170
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            source: "compass_static.png"
+                            fillMode: Image.PreserveAspectFit
+                        }
                     }
 
                     Rectangle {
-                        id: rectangle1
+                        id: battery
                         width: 190
                         height: 170
                         color: "#191919"
+
+                        Image {
+                            id: image5
+                            width: 141
+                            height: 125
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            source: "battery_indicator.png"
+                            fillMode: Image.PreserveAspectFit
+                        }
                     }
+
                 }
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*##^## Designer {
+    D{i:1;anchors_height:460;anchors_width:780;anchors_x:10;anchors_y:10}
+}
+ ##^##*/

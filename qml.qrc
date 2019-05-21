@@ -14,5 +14,8 @@
         <file>angles.png</file>
         <file>caret-arrow-up.png</file>
         <file>vertical_angle.png</file>
+        <file>battery_indicator.png</file>
+        <file>compass_static.png</file>
+        <file>compass_dynamic.png</file>
     </qresource>
 </RCC>
