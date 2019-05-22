@@ -84,53 +84,11 @@ Window {
 
             Rectangle {
                 id: landing_take_off
-                width: 230
+                width: 270
                 height: 90
                 color: "#222222"
                 radius: 1
                 opacity: 1
-
-                Row {
-                    id: landing_take_off_container
-                    height: 85
-                    spacing: 0
-                    anchors.fill: parent
-                    layoutDirection: Qt.LeftToRight
-
-                    Item {
-                        id: take_off
-                        width: 115
-                        height: 90
-                        transformOrigin: Item.Center
-
-                        Image {
-                            id: image
-                            width: 64
-                            height: 64
-                            opacity: 0.11
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: "take-off.png"
-                        }
-                    }
-
-                    Item {
-                        id: landing
-                        width: 115
-                        height: 90
-
-                        Image {
-                            id: image1
-                            width: 64
-                            height: 64
-                            opacity: 0.9
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            source: "landing.png"
-                        }
-                    }
-
-                }
 
                 border.color: "#3f3f3f"
             }
