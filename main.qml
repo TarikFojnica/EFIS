@@ -9,6 +9,14 @@ Window {
     color: "#000000"
     title: qsTr("Electronic Flight Instrument System")
 
+    Connections {
+        target: informationProviderClass
+        onMessageChanged: [
+            airspeed_indicator_container.y = 100,
+            airspeed_indicator_val.text = 100
+        ]
+    }
+
     Grid {
         id: grid
         x: 10
@@ -43,26 +51,6 @@ Window {
                         x: 85
                         width: 214
                         height: 90
-
-                        Text {
-                            id: text1
-                            x: 0
-                            y: 0
-                            width: 214
-                            height: 53
-                            color: "#df1c1c"
-                            text: qsTr("pull up")
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.capitalization: Font.SmallCaps
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignLeft
-                            font.weight: Font.Bold
-                            textFormat: Text.AutoText
-                            fontSizeMode: Text.FixedSize
-                            font.family: "Arial"
-                            font.pixelSize: 40
-                        }
                     }
 
                     Item {
@@ -83,6 +71,7 @@ Window {
             }
 
             Rectangle {
+
                 id: landing_take_off
                 width: 270
                 height: 90
@@ -92,7 +81,20 @@ Window {
 
                 border.color: "#3f3f3f"
             }
-        }
+            MouseArea {
+                    id: mouseArea
+                    x: 0
+                    y: 6
+                    width: 231
+                    height: 44
+                    onClicked: informationProviderClass.doMessageChange()
+                    Text {
+                        id: name
+                        color: "#ffffff"
+                        text: qsTr("Start the simulation")
+                    }
+                }
+            }
 
         Row {
             id: bottom_row
@@ -102,7 +104,7 @@ Window {
             spacing: 10
 
             Item {
-                id: airspeed_continer
+                id: airspeed_indicator_wrapper
                 x: 320
                 width: 130
                 height: 360
@@ -137,22 +139,36 @@ Window {
 
                     }
                     Rectangle {
-                        id: value
+                        id: airspeed_indicator_container
                         x: 0
-                        y: 177
+                        y: 250
                         width: 97
                         height: 32
                         color: "#b3000000"
                         z: 2
                         border.color: "#a6a6a6"
+                        border.width: 2
+                        opacity: 1
+
+                        PropertyAnimation on y {
+                            id: animatingPosition
+                            running: true
+                            from: 250;
+                            to: 100;
+                            duration: 20000
+                            easing.type: Easing.InOutQuad
+                        }
+
                         Text {
-                            id: text4
+                            id: airspeed_indicator_val
+                            property int value: 140
+                            text: value
                             x: 29
                             y: 0
                             width: 84
                             height: 32
                             color: "#fdfdfd"
-                            text: qsTr("130.23")
+
                             font.capitalization: Font.Capitalize
                             font.underline: false
                             font.italic: false
@@ -165,9 +181,17 @@ Window {
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignLeft
                             font.bold: true
+
+                            NumberAnimation on value {
+                                id: animation_airspeed_indicator_val
+                                running: true
+                                from: 100;
+                                to: 300;
+                                duration: 20000;
+                                easing.type: Easing.InOutQuad
+                            }
                         }
-                        border.width: 2
-                        opacity: 1
+
                     }
                 }
 
