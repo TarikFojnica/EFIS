@@ -149,12 +149,14 @@ Window {
                         border.color: "#a6a6a6"
                         border.width: 2
                         opacity: 1
+                        property int animationTo: 0
+
 
                         PropertyAnimation on y {
                             id: animatingPosition
                             running: true
-                            from: 250;
-                            to: 100;
+                            from: airspeed_indicator_container.y
+                            to: airspeed_indicator_container.animationTo;
                             duration: 20000
                             easing.type: Easing.InOutQuad
                         }
