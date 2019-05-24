@@ -7,13 +7,33 @@ Window {
     width: 800
     height: 480
     color: "#000000"
+    property alias airspeed_indicator_wrapper: airspeed_indicator_wrapper
     title: qsTr("Electronic Flight Instrument System")
 
     Connections {
         target: informationProviderClass
         onMessageChanged: [
-            airspeed_indicator_container.y = 100,
-            airspeed_indicator_val.text = 100
+            airspeed_indicator_container.animationStartVal = 250,
+            airspeed_indicator_container.animationEndVal = 100,
+            animation_airspeed_indicator_container.running = true,
+            airspeed_indicator_container.length = 1000,
+
+            airspeed_indicator_val.animationStartVal = 0,
+            airspeed_indicator_val.animationEndVal = 300,
+            airspeed_indicator_val.length = 1000,
+            animation_airspeed_indicator_val.running = true,
+
+            animation_sequential_virtual_horizon_XY.running = true,
+
+//            virtual_horizon_container.animationYStartVal = 0,
+//            virtual_horizon_container.animationYEndVal = 100,
+//            virtual_horizon_container.animationXYLength = 1000,
+//            animation_virtual_horizon_XY.running = true,
+
+//            virtual_horizon_container.animationRotationStartVal = 0,
+//            virtual_horizon_container.animationRotationEndVal = 1000,
+//            virtual_horizon_container.animationRotationLength = 1000,
+//            animation_virtual_horizon_rotation.running = true
         ]
     }
 
@@ -28,73 +48,45 @@ Window {
 
         Row {
             id: upper_panel
-            width: 500
+            width: 780
             height: 90
             spacing: 10
 
             Rectangle {
-                id: warning_block
-                width: 300
-                height: 90
-                color: "#222222"
-                radius: 1
-                opacity: 1
-                border.color: "#3f3f3f"
+                id: rectangle
+                x: 0
+                y: 50
+                width: 200
+                height: 40
+                color: "#1b1b1b"
+                border.color: "#cfeca1"
 
-                Row {
-                    id: row
-                    anchors.fill: parent
-                    layoutDirection: Qt.RightToLeft
-
-                    Item {
-                        id: warning_text
-                        x: 85
-                        width: 214
-                        height: 90
-                    }
-
-                    Item {
-                        id: warning_icon_container
-                        anchors.fill: parent
-
-                        Image {
-                            id: warning_icon
-                            x: 10
-                            y: 10
-                            width: 64
-                            height: 64
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: "warning.png"
-                        }
-                    }
-                }
-            }
-
-            Rectangle {
-
-                id: landing_take_off
-                width: 270
-                height: 90
-                color: "#222222"
-                radius: 1
-                opacity: 1
-
-                border.color: "#3f3f3f"
-            }
-            MouseArea {
+                MouseArea {
                     id: mouseArea
-                    x: 0
-                    y: 6
-                    width: 231
-                    height: 44
+                    x: 790
+                    y: 0
+                    width: 200
+                    height: 60
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: informationProviderClass.doMessageChange()
+
                     Text {
                         id: name
+                        x: -776
+                        y: 14
                         color: "#ffffff"
-                        text: qsTr("Start the simulation")
+                        text: qsTr("Take Off")
+                        font.pointSize: 20
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
+
                 }
             }
+
+
+        }
 
         Row {
             id: bottom_row
@@ -149,15 +141,16 @@ Window {
                         border.color: "#a6a6a6"
                         border.width: 2
                         opacity: 1
-                        property int animationTo: 0
-
+                        property int animationEndVal: 0
+                        property int animationStartVal: 0
+                        property int length : 10000
 
                         PropertyAnimation on y {
-                            id: animatingPosition
-                            running: true
-                            from: airspeed_indicator_container.y
-                            to: airspeed_indicator_container.animationTo;
-                            duration: 20000
+                            id: animation_airspeed_indicator_container
+                            running: false
+                            from: airspeed_indicator_container.animationStartVal
+                            to: airspeed_indicator_container.animationEndVal;
+                            duration: 1000;
                             easing.type: Easing.InOutQuad
                         }
 
@@ -183,13 +176,16 @@ Window {
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignLeft
                             font.bold: true
+                            property int animationStartVal: 0
+                            property int animationEndVal: 0
+                            property int length : 10000
 
                             NumberAnimation on value {
                                 id: animation_airspeed_indicator_val
-                                running: true
-                                from: 100;
-                                to: 300;
-                                duration: 20000;
+                                running: false
+                                from: airspeed_indicator_val.animationStartVal;
+                                to: airspeed_indicator_val.animationEndVal;
+                                duration: airspeed_indicator_val.length;
                                 easing.type: Easing.InOutQuad
                             }
                         }
@@ -233,7 +229,7 @@ Window {
 
 
             Rectangle {
-                id: virtual_horizon_container
+                id: virtual_horizon_wrapper
                 width: 300
                 height: 360
                 color: "#000000"
@@ -246,13 +242,47 @@ Window {
                 clip: true
 
                 Item {
-                    id: dynamic
+                    id: virtual_horizon_container
                     x: 0
                     y: 0
                     width: 300
                     height: 360
                     z: 0
                     rotation: 0
+                    property int animationRotationStartVal: 0
+                    property int animationRotationEndVal: 30
+
+                    property int animationYStartVal: 0
+                    property int animationYEndVal: 20
+
+                    property int animationRotationLength : 5000
+                    property int animationXYLength : 5000
+
+                    SequentialAnimation {
+                        id: animation_sequential_virtual_horizon_XY
+                        running: false
+
+                        PauseAnimation { duration: 1000 }
+                        NumberAnimation {
+                            id: animation_virtual_horizon_XY
+                            target: virtual_horizon_container
+                            property: "y"
+                            from: 0
+                            to: -50
+                            duration: virtual_horizon_container.animationXYLength;
+                            easing.type: Easing.InOutQuad
+                        }
+
+                        NumberAnimation {
+                            id: animation_virtual_horizon_rotation
+                            target: virtual_horizon_container
+                            property: "rotation"
+                            from: virtual_horizon_container.animationYStartVal
+                            to: virtual_horizon_container.animationYEndVal
+                            duration: virtual_horizon_container.animationRotationLength;
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
 
                     Image {
                         id: horizon
@@ -271,7 +301,7 @@ Window {
                     }
 
                     Image {
-                        id: image2
+                        id: degree_pointer
                         x: 140
                         y: 29
                         width: 20
@@ -432,7 +462,7 @@ Window {
                         color: "#000000"
 
                         Image {
-                            id: compass_dynamic
+                            id: compass_static
                             width: 100
                             height: 100
                             anchors.verticalCenter: parent.verticalCenter
@@ -442,7 +472,7 @@ Window {
                         }
 
                         Image {
-                            id: image6
+                            id: compass_dynamic
                             width: 190
                             height: 170
                             anchors.verticalCenter: parent.verticalCenter
