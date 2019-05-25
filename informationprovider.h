@@ -12,9 +12,11 @@ public:
 
 signals:
     void messageChanged(int m_counter);
+    void militaryJetStyleExecuted();
 
 public slots:
     void doMessageChange();
+    void doMilitaryJetStyle();
 
 private:
     int m_counter;

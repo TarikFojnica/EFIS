@@ -16,3 +16,9 @@ void InformationProvider::doMessageChange()
     cout << "Hellow from qml" << endl;
     emit messageChanged(500);
 }
+
+void InformationProvider::doMilitaryJetStyle()
+{
+    cout << "Hellow from qml" << endl;
+    emit militaryJetStyleExecuted();
+}

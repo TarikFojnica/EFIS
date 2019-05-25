@@ -19,7 +19,12 @@ Window {
           altitude_indicator_val.value = 0,
           virtual_horizon_container.y = 0,
           virtual_horizon_container.rotation = 0,
+          compass_dynamic.rotation = 0,
           animation_sequential_take_off.restart(),
+        ]
+
+        onMilitaryJetStyleExecuted: [
+          animation_military_jet_style.restart()
         ]
     }
 
@@ -39,10 +44,10 @@ Window {
             spacing: 10
 
             Rectangle {
-                id: rectangle
+                id: button_1_container
                 x: 0
                 y: 50
-                width: 200
+                width: 180
                 height: 40
                 color: "#1b1b1b"
                 border.color: "#cfeca1"
@@ -51,10 +56,10 @@ Window {
                     id: mouseArea
                     x: 790
                     y: 0
-                    width: 200
+                    width: 180
                     height: 60
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
                     onClicked: informationProviderClass.doMessageChange()
 
                     Text {
@@ -69,6 +74,94 @@ Window {
                     }
 
                 }
+            }
+
+            Rectangle {
+                id: button_2_container
+                x: 0
+                y: 50
+                width: 180
+                height: 40
+                color: "#1b1b1b"
+                MouseArea {
+                    id: mouseArea1
+                    x: 790
+                    y: 0
+                    width: 180
+                    height: 60
+                    Text {
+                        id: name1
+                        x: -776
+                        y: 14
+                        color: "#ffffff"
+                        text: qsTr("Loosing Contol")
+                        font.pointSize: 20
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                border.color: "#cfeca1"
+            }
+
+            Rectangle {
+                id: button_2_container1
+                x: 0
+                y: 50
+                width: 180
+                height: 40
+                color: "#1b1b1b"
+                MouseArea {
+                    id: mouseArea2
+                    x: 790
+                    y: 0
+                    width: 180
+                    height: 60
+                    onClicked: informationProviderClass.militaryJetStyleExecuted()
+                    Text {
+                        id: name2
+                        x: -776
+                        y: 14
+                        color: "#ffffff"
+                        text: qsTr("Military Jet Style")
+                        font.pointSize: 20
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                border.color: "#cfeca1"
+            }
+
+            Rectangle {
+                id: button_2_container2
+                x: 0
+                y: 50
+                width: 200
+                height: 40
+                color: "#1b1b1b"
+                MouseArea {
+                    id: mouseArea3
+                    x: 790
+                    y: 0
+                    width: 200
+                    height: 60
+                    Text {
+                        id: name3
+                        x: -776
+                        y: 14
+                        color: "#ffffff"
+                        text: qsTr("Stop")
+                        font.pointSize: 20
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                border.color: "#f71a1a"
             }
 
 
@@ -188,7 +281,7 @@ Window {
                     y: 0
                     width: 130
                     height: 360
-                    color: "#191919"
+                    color: "#000000"
                     radius: 1
                     border.color: "#606060"
                     z: -4
@@ -378,7 +471,7 @@ Window {
                     y: 0
                     width: 130
                     height: 360
-                    color: "#191919"
+                    color: "#000000"
                     radius: 1
                     z: -4
                     border.color: "#606060"
@@ -482,7 +575,7 @@ Window {
 
         ParallelAnimation {
             SequentialAnimation {
-                //Rotate Up
+                //Y up
                 NumberAnimation {
                     id: animation_virtual_horizon_XY
                     target: virtual_horizon_container
@@ -519,7 +612,7 @@ Window {
 
                 ParallelAnimation {
 
-                    // Rotate Right
+                    // Rotate Left
                     NumberAnimation {
                         target: virtual_horizon_container
                         property: "rotation"
@@ -537,8 +630,17 @@ Window {
                         duration: 7000
                         easing.type: Easing.InOutQuad
                     }
-                }
 
+                    NumberAnimation {
+                        target: virtual_horizon_container
+                        property: "y"
+                        from: 50
+                        to: 0
+                        duration: 9000
+                        easing.type: Easing.InOutQuad
+                    }
+
+                }
             }
 
             // Altitude indicator
@@ -550,7 +652,7 @@ Window {
                     from: 250
                     to: 120
                     duration: 21000;
-                    easing.type: Easing.InQuart
+                    easing.type: Easing.InOutQuad
                 }
 
 
@@ -561,11 +663,57 @@ Window {
                     from: 0
                     to: 1200
                     duration: 21000
-                    easing.type: Easing.InQuart
+                    easing.type: Easing.InOutQuad
                 }
             }
 
         }
+    }
+
+    ParallelAnimation {
+        id: animation_military_jet_style
+        running: false
+
+        PropertyAnimation {
+            target: airspeed_indicator_container
+            property: "y"
+            from: 120
+            to: 50
+            duration: 15000;
+            easing.type: Easing.InOutQuad
+        }
+
+
+        NumberAnimation {
+            target: airspeed_indicator_val
+            property: "value"
+            from: 300
+            to: 420
+            duration: 15000
+            easing.type: Easing.InOutQuad
+        }
+
+        SequentialAnimation {
+            // Rotate 360
+            NumberAnimation {
+                target: virtual_horizon_container
+                property: "rotation"
+                from: 0
+                to: 360
+                duration: 7000
+                easing.type:Easing.InOutBack
+            }
+        }
+    }
+
+    Text {
+        id: text1
+        x: 10
+        y: 15
+        color: "#fbfbfb"
+        text: qsTr("Available Simulations")
+        font.bold: true
+        font.pixelSize: 20
     }
 }
 
