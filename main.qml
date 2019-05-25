@@ -13,6 +13,7 @@ Window {
     Connections {
         target: informationProviderClass
         onMessageChanged: [
+          animation_military_jet_style.stop(),
           airspeed_indicator_container.y = 250,
           airspeed_indicator_val.value = 0,
           altitude_indicator_container.y = 250,
@@ -24,7 +25,19 @@ Window {
         ]
 
         onMilitaryJetStyleExecuted: [
+          animation_sequential_take_off.stop(),
+          airspeed_indicator_container.y = 120,
+          airspeed_indicator_val.value = 300,
+          altitude_indicator_container.y = 120,
+          altitude_indicator_val.value = 800,
+          virtual_horizon_container.y = 0,
+          virtual_horizon_container.rotation = 0,
+          compass_dynamic.rotation = 0,
           animation_military_jet_style.restart()
+        ]
+
+        onLoosingControllExecuted: [
+            animation_loosing_controll.restart()
         ]
     }
 
@@ -89,6 +102,8 @@ Window {
                     y: 0
                     width: 180
                     height: 60
+                    onClicked: informationProviderClass.doLoosingControll()
+
                     Text {
                         id: name1
                         x: -776
@@ -542,7 +557,7 @@ Window {
         }
     }
 
-    // Each animation is 25 secs
+
     SequentialAnimation {
         id: animation_sequential_take_off
         running: false
@@ -670,40 +685,173 @@ Window {
         }
     }
 
-    ParallelAnimation {
+    SequentialAnimation {
         id: animation_military_jet_style
         running: false
 
-        PropertyAnimation {
-            target: airspeed_indicator_container
-            property: "y"
-            from: 120
-            to: 50
-            duration: 15000;
-            easing.type: Easing.InOutQuad
-        }
+        PauseAnimation { duration: 1000 }
+
+        ParallelAnimation {
+
+            PropertyAnimation {
+                target: airspeed_indicator_container
+                property: "y"
+                from: 120
+                to: 50
+                duration: 15000;
+                easing.type: Easing.InOutQuad
+            }
 
 
-        NumberAnimation {
-            target: airspeed_indicator_val
-            property: "value"
-            from: 300
-            to: 420
-            duration: 15000
-            easing.type: Easing.InOutQuad
-        }
-
-        SequentialAnimation {
-            // Rotate 360
             NumberAnimation {
-                target: virtual_horizon_container
-                property: "rotation"
-                from: 0
-                to: 360
-                duration: 7000
-                easing.type:Easing.InOutBack
+                target: airspeed_indicator_val
+                property: "value"
+                from: 300
+                to: 420
+                duration: 15000
+                easing.type: Easing.InOutQuad
+            }
+
+            SequentialAnimation {
+                // Rotate 360
+                NumberAnimation {
+                    target: virtual_horizon_container
+                    property: "rotation"
+                    from: 0
+                    to: 360
+                    duration: 7000
+                    easing.type:Easing.InOutBack
+                }
+
+                ParallelAnimation {
+
+                    NumberAnimation {
+                        target: virtual_horizon_container
+                        property: "y"
+                        from: 0
+                        to: 100
+                        duration: 7000
+                        easing.type:Easing.InOutQuad
+                    }
+
+                    PropertyAnimation {
+                        target: altitude_indicator_container
+                        property: "y"
+                        from: 120
+                        to: 50
+                        duration: 15000;
+                        easing.type: Easing.InOutQuad
+                    }
+
+
+                    NumberAnimation {
+                        target: altitude_indicator_val
+                        property: "value"
+                        from: 800
+                        to: 1200
+                        duration: 15000
+                        easing.type: Easing.InOutQuad
+                    }
+                }
             }
         }
+    }
+
+    SequentialAnimation {
+        id: animation_loosing_controll
+        running: false
+
+        ParallelAnimation {
+            NumberAnimation {
+                target: virtual_horizon_container
+                property: "y"
+                from: 0
+                to: 100
+                duration: 15000
+                easing.type:Easing.InOutQuad
+            }
+
+            PropertyAnimation {
+                target: altitude_indicator_container
+                property: "y"
+                from: 120
+                to: 50
+                duration: 15000;
+                easing.type: Easing.InOutQuad
+            }
+
+
+            NumberAnimation {
+                target: altitude_indicator_val
+                property: "value"
+                from: 800
+                to: 1200
+                duration: 15000
+                easing.type: Easing.InOutQuad
+            }
+
+            PropertyAnimation {
+                target: airspeed_indicator_container
+                property: "y"
+                from: 50
+                to: 230
+                duration: 15000;
+                easing.type: Easing.InOutQuad
+            }
+
+
+            NumberAnimation {
+                target: airspeed_indicator_val
+                property: "value"
+                from: 450
+                to: 200
+                duration: 15000
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        //Starts loosing height
+
+        SequentialAnimation {
+            ParallelAnimation {
+
+                PropertyAction {
+                    target: status_val
+                    property: "text"
+                    value: "Airspeed Too Low!"
+                }
+
+
+                ColorAnimation {
+                    loops: Animation.Infinite
+                    target: status_val
+                    property: "color"
+                    from: "white"
+                    to: "red"
+                    duration: 1000
+                }
+
+               PropertyAnimation {
+                    target: altitude_indicator_container
+                    property: "y"
+                    from: 50
+                    to: 270
+                    duration: 15000;
+                    easing.type: Easing.InQuart
+                }
+
+
+                NumberAnimation {
+                    target: altitude_indicator_val
+                    property: "value"
+                    from: 1200
+                    to: 0
+                    duration: 15000
+                    easing.type: Easing.InQuart
+                }
+            }
+        }
+
     }
 
     Text {
@@ -711,7 +859,17 @@ Window {
         x: 10
         y: 15
         color: "#fbfbfb"
-        text: qsTr("Available Simulations")
+        text: qsTr("Status:")
+        font.bold: true
+        font.pixelSize: 20
+    }
+
+    Text {
+        id: status_val
+        x: 84
+        y: 15
+        color: "#fbfbfb"
+        text: qsTr("OK")
         font.bold: true
         font.pixelSize: 20
     }

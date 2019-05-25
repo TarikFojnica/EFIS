@@ -13,12 +13,18 @@ InformationProvider::InformationProvider(QObject *parent)
 
 void InformationProvider::doMessageChange()
 {
-    cout << "Hellow from qml" << endl;
+    cout << "Hello from qml" << endl;
     emit messageChanged(500);
 }
 
 void InformationProvider::doMilitaryJetStyle()
 {
-    cout << "Hellow from qml" << endl;
+    cout << "Hello from qml" << endl;
     emit militaryJetStyleExecuted();
+}
+
+void InformationProvider::doLoosingControll()
+{
+    cout << "Hello from qml" << endl;
+    emit loosingControllExecuted();
 }
