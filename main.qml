@@ -13,27 +13,13 @@ Window {
     Connections {
         target: informationProviderClass
         onMessageChanged: [
-            airspeed_indicator_container.animationStartVal = 250,
-            airspeed_indicator_container.animationEndVal = 100,
-            animation_airspeed_indicator_container.running = true,
-            airspeed_indicator_container.length = 1000,
-
-            airspeed_indicator_val.animationStartVal = 0,
-            airspeed_indicator_val.animationEndVal = 300,
-            airspeed_indicator_val.length = 1000,
-            animation_airspeed_indicator_val.running = true,
-
-            animation_sequential_virtual_horizon_XY.running = true,
-
-//            virtual_horizon_container.animationYStartVal = 0,
-//            virtual_horizon_container.animationYEndVal = 100,
-//            virtual_horizon_container.animationXYLength = 1000,
-//            animation_virtual_horizon_XY.running = true,
-
-//            virtual_horizon_container.animationRotationStartVal = 0,
-//            virtual_horizon_container.animationRotationEndVal = 1000,
-//            virtual_horizon_container.animationRotationLength = 1000,
-//            animation_virtual_horizon_rotation.running = true
+          airspeed_indicator_container.y = 250,
+          airspeed_indicator_val.value = 0,
+          altitude_indicator_container.y = 250,
+          altitude_indicator_val.value = 0,
+          virtual_horizon_container.y = 0,
+          virtual_horizon_container.rotation = 0,
+          animation_sequential_take_off.restart(),
         ]
     }
 
@@ -145,15 +131,6 @@ Window {
                         property int animationStartVal: 0
                         property int length : 10000
 
-                        PropertyAnimation on y {
-                            id: animation_airspeed_indicator_container
-                            running: false
-                            from: airspeed_indicator_container.animationStartVal
-                            to: airspeed_indicator_container.animationEndVal;
-                            duration: 1000;
-                            easing.type: Easing.InOutQuad
-                        }
-
                         Text {
                             id: airspeed_indicator_val
                             property int value: 140
@@ -179,15 +156,6 @@ Window {
                             property int animationStartVal: 0
                             property int animationEndVal: 0
                             property int length : 10000
-
-                            NumberAnimation on value {
-                                id: animation_airspeed_indicator_val
-                                running: false
-                                from: airspeed_indicator_val.animationStartVal;
-                                to: airspeed_indicator_val.animationEndVal;
-                                duration: airspeed_indicator_val.length;
-                                easing.type: Easing.InOutQuad
-                            }
                         }
 
                     }
@@ -258,31 +226,6 @@ Window {
                     property int animationRotationLength : 5000
                     property int animationXYLength : 5000
 
-                    SequentialAnimation {
-                        id: animation_sequential_virtual_horizon_XY
-                        running: false
-
-                        PauseAnimation { duration: 1000 }
-                        NumberAnimation {
-                            id: animation_virtual_horizon_XY
-                            target: virtual_horizon_container
-                            property: "y"
-                            from: 0
-                            to: -50
-                            duration: virtual_horizon_container.animationXYLength;
-                            easing.type: Easing.InOutQuad
-                        }
-
-                        NumberAnimation {
-                            id: animation_virtual_horizon_rotation
-                            target: virtual_horizon_container
-                            property: "rotation"
-                            from: virtual_horizon_container.animationYStartVal
-                            to: virtual_horizon_container.animationYEndVal
-                            duration: virtual_horizon_container.animationRotationLength;
-                            easing.type: Easing.InOutQuad
-                        }
-                    }
 
                     Image {
                         id: horizon
@@ -345,14 +288,14 @@ Window {
                 width: 130
                 height: 360
                 Rectangle {
-                    id: airspeed_indicator1
+                    id: altitude_wrapper
                     x: 18
                     y: 8
                     width: 25
                     height: 300
                     radius: 10
                     Rectangle {
-                        id: value1
+                        id: altitude_indicator_container
                         x: 0
                         y: 101
                         width: 97
@@ -362,13 +305,14 @@ Window {
                         opacity: 1
                         border.width: 2
                         Text {
-                            id: text6
+                            id: altitude_indicator_val
+                            property int value: 140
+                            text: value
                             x: 29
                             y: 0
                             width: 84
                             height: 32
                             color: "#fdfdfd"
-                            text: qsTr("130.23")
                             anchors.verticalCenter: parent.verticalCenter
                             font.underline: false
                             verticalAlignment: Text.AlignVCenter
@@ -475,6 +419,7 @@ Window {
                             id: compass_dynamic
                             width: 190
                             height: 170
+                            rotation: 0
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
                             source: "compass_static.png"
@@ -503,7 +448,127 @@ Window {
             }
         }
     }
+
+    // Each animation is 25 secs
+    SequentialAnimation {
+        id: animation_sequential_take_off
+        running: false
+
+        PauseAnimation { duration: 1000 }
+
+        // Increase the speed indicator
+        ParallelAnimation {
+            PropertyAnimation {
+                id: animation_airspeed_indicator_container
+                target: airspeed_indicator_container
+                property: "y"
+                from: 250
+                to: 120
+                duration: 4000;
+                easing.type: Easing.InOutQuad
+            }
+
+
+            NumberAnimation {
+                id: animation_airspeed_indicator_val
+                target: airspeed_indicator_val
+                property: "value"
+                from: 0
+                to: 120
+                duration: 4000
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        ParallelAnimation {
+            SequentialAnimation {
+                //Rotate Up
+                NumberAnimation {
+                    id: animation_virtual_horizon_XY
+                    target: virtual_horizon_container
+                    property: "y"
+                    from: 0
+                    to: 50
+                    duration: 9000
+                    easing.type: Easing.InOutQuad
+                }
+
+                ParallelAnimation {
+
+                    // Rotate Right
+                    NumberAnimation {
+                        id: animation_virtual_horizon_rotation
+                        target: virtual_horizon_container
+                        property: "rotation"
+                        from: 0
+                        to: 30
+                        duration: 7000
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        id: animation_compass_rotation
+                        target: compass_dynamic
+                        property: "rotation"
+                        from: 0
+                        to: 30
+                        duration: 7000
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+
+                ParallelAnimation {
+
+                    // Rotate Right
+                    NumberAnimation {
+                        target: virtual_horizon_container
+                        property: "rotation"
+                        from: 30
+                        to: 0
+                        duration: 7000
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: compass_dynamic
+                        property: "rotation"
+                        from: 30
+                        to: 0
+                        duration: 7000
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+
+            }
+
+            // Altitude indicator
+            ParallelAnimation {
+                PropertyAnimation {
+                    id: animation_altitude_indicator_container
+                    target: altitude_indicator_container
+                    property: "y"
+                    from: 250
+                    to: 120
+                    duration: 21000;
+                    easing.type: Easing.InQuart
+                }
+
+
+                NumberAnimation {
+                    id: animation_altitude_indicator_val
+                    target: altitude_indicator_val
+                    property: "value"
+                    from: 0
+                    to: 1200
+                    duration: 21000
+                    easing.type: Easing.InQuart
+                }
+            }
+
+        }
+    }
 }
+
 
 
 
