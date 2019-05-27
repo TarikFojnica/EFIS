@@ -122,8 +122,18 @@ Window {
         ]
 
         onLoosingControllExecuted: [
-            animation_military_jet_style.stop(),
             animation_sequential_take_off.stop(),
+            animation_military_jet_style.stop(),
+            status_val.text = "OK",
+            status_val.color = "white",
+            airspeed_indicator_container.y = 50,
+            airspeed_indicator_val.value = 450,
+            altitude_indicator_container.y = 120,
+            altitude_indicator_value.value = 800,
+            virtual_horizon_container.y = 0,
+            virtual_horizon_container.rotation = 0,
+            compass_dynamic.rotation = 0,
+
             animation_loosing_controll.restart()
         ]
 
@@ -133,6 +143,12 @@ Window {
 
         onConfigSubmitted: [
             config.visible = false
+        ]
+
+        onStopExecuted: [
+            animation_military_jet_style.stop(),
+            animation_sequential_take_off.stop(),
+            animation_loosing_controll.stop()
         ]
     }
 
@@ -260,6 +276,8 @@ Window {
                     y: 0
                     width: 200
                     height: 60
+                    onClicked: informationProviderClass.stopExecuted()
+
                     Text {
                         id: name3
                         x: -776
@@ -300,6 +318,7 @@ Window {
                     color: "#19727d"
                     radius: 10
                     gradient: Gradient {
+
                         GradientStop {
                             position: 0
                             color: "#19727d"
@@ -853,9 +872,11 @@ Window {
         }
     }
 
+    //loosing control
     SequentialAnimation {
         id: animation_loosing_controll
         running: false
+        PauseAnimation { duration: 1000 }
 
         ParallelAnimation {
             NumberAnimation {

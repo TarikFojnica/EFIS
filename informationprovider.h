@@ -16,6 +16,7 @@ signals:
     void loosingControllExecuted();
     void configOpened();
     void configSubmitted();
+    void stopExecuted();
 
 public slots:
     void doMessageChange();
@@ -23,6 +24,7 @@ public slots:
     void doLoosingControll();
     void openConfig();
     void submitConfig();
+    void doStop();
 
 private:
     int m_counter;
