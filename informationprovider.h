@@ -14,11 +14,15 @@ signals:
     void messageChanged(int m_counter);
     void militaryJetStyleExecuted();
     void loosingControllExecuted();
+    void configOpened();
+    void configSubmitted();
 
 public slots:
     void doMessageChange();
     void doMilitaryJetStyle();
     void doLoosingControll();
+    void openConfig();
+    void submitConfig();
 
 private:
     int m_counter;

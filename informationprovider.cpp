@@ -19,6 +19,7 @@ void InformationProvider::doMessageChange()
 
 void InformationProvider::doMilitaryJetStyle()
 {
+
     cout << "Hello from qml" << endl;
     emit militaryJetStyleExecuted();
 }
@@ -27,4 +28,16 @@ void InformationProvider::doLoosingControll()
 {
     cout << "Hello from qml" << endl;
     emit loosingControllExecuted();
+}
+
+void InformationProvider::openConfig()
+{
+    cout << "Hello from qml" << endl;
+    emit configOpened();
+}
+
+void InformationProvider::submitConfig()
+{
+    cout << "Hello from qml" << endl;
+    emit configSubmitted();
 }

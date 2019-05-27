@@ -7,37 +7,132 @@ Window {
     width: 800
     height: 480
     color: "#000000"
+    property alias config: config
     property alias airspeed_indicator_wrapper: airspeed_indicator_wrapper
     title: qsTr("Electronic Flight Instrument System")
+
+    Rectangle {
+        id: config
+        visible: false
+        x: -1
+        y: 0
+        width: 800
+        height: 480
+        color: "#d9000000"
+        z: 5
+
+        Column {
+            id: column
+            x: 462
+            y: 110
+            width: 338
+            height: 346
+            spacing: 10
+
+            Text {
+                id: config_title
+                color: "#f6f6f6"
+                text: qsTr("Configuration")
+                font.family: "Tahoma"
+                font.pixelSize: 26
+            }
+
+            Rectangle {
+                id: rectangle1
+                width: 200
+                height: 40
+                color: "#148c28"
+                MouseArea {
+                    id: submit_config1
+                    x: 0
+                    y: 0
+                    width: 200
+                    height: 40
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: informationProviderClass.submitConfig()
+                }
+
+                Text {
+                    id: text3
+                    x: 0
+                    y: 0
+                    width: 172
+                    height: 24
+                    color: "#ffffff"
+                    text: qsTr("OK")
+                    font.pixelSize: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                id: config_title1
+                y: 50
+                color: "#f6f6f6"
+                text: qsTr("Server IP: 109.237.37.107")
+                font.pixelSize: 20
+                font.family: "Tahoma"
+            }
+
+            Text {
+                id: config_title2
+                y: 100
+                color: "#f6f6f6"
+                text: qsTr("PORT: 8080")
+                font.pixelSize: 20
+                font.family: "Tahoma"
+            }
+
+        }
+    }
 
     Connections {
         target: informationProviderClass
         onMessageChanged: [
-          animation_military_jet_style.stop(),
-          airspeed_indicator_container.y = 250,
-          airspeed_indicator_val.value = 0,
-          altitude_indicator_container.y = 250,
-          altitude_indicator_val.value = 0,
-          virtual_horizon_container.y = 0,
-          virtual_horizon_container.rotation = 0,
-          compass_dynamic.rotation = 0,
-          animation_sequential_take_off.restart(),
+            animation_military_jet_style.stop(),
+            animation_loosing_controll.stop(),
+            status_val.text = "OK",
+            status_val.color = "white",
+            airspeed_indicator_container.y = 250,
+            airspeed_indicator_val.value = 0,
+            altitude_indicator_container.y = 250,
+            altitude_indicator_value.value = 0,
+            virtual_horizon_container.y = 0,
+            virtual_horizon_container.rotation = 0,
+            compass_dynamic.rotation = 0,
+            animation_sequential_take_off.restart(),
         ]
 
         onMilitaryJetStyleExecuted: [
-          animation_sequential_take_off.stop(),
-          airspeed_indicator_container.y = 120,
-          airspeed_indicator_val.value = 300,
-          altitude_indicator_container.y = 120,
-          altitude_indicator_val.value = 800,
-          virtual_horizon_container.y = 0,
-          virtual_horizon_container.rotation = 0,
-          compass_dynamic.rotation = 0,
-          animation_military_jet_style.restart()
+            animation_sequential_take_off.stop(),
+            animation_loosing_controll.stop(),
+            status_val.text = "OK",
+            status_val.color = "white",
+            airspeed_indicator_container.y = 120,
+            airspeed_indicator_val.value = 300,
+            altitude_indicator_container.y = 120,
+            altitude_indicator_value.value = 800,
+            virtual_horizon_container.y = 0,
+            virtual_horizon_container.rotation = 0,
+            compass_dynamic.rotation = 0,
+            animation_military_jet_style.restart()
         ]
 
         onLoosingControllExecuted: [
+            animation_military_jet_style.stop(),
+            animation_sequential_take_off.stop(),
             animation_loosing_controll.restart()
+        ]
+
+        onConfigOpened: [
+            config.visible = true
+        ]
+
+        onConfigSubmitted: [
+            config.visible = false
         ]
     }
 
@@ -102,6 +197,8 @@ Window {
                     y: 0
                     width: 180
                     height: 60
+                    anchors.verticalCenterOffset: 0
+                    anchors.horizontalCenterOffset: 0
                     onClicked: informationProviderClass.doLoosingControll()
 
                     Text {
@@ -413,14 +510,14 @@ Window {
                         opacity: 1
                         border.width: 2
                         Text {
-                            id: altitude_indicator_val
+                            id: altitude_indicator_value
                             property int value: 140
-                            text: value
                             x: 29
                             y: 0
                             width: 84
                             height: 32
                             color: "#fdfdfd"
+                            text: value
                             anchors.verticalCenter: parent.verticalCenter
                             font.underline: false
                             verticalAlignment: Text.AlignVCenter
@@ -557,7 +654,6 @@ Window {
         }
     }
 
-
     SequentialAnimation {
         id: animation_sequential_take_off
         running: false
@@ -673,7 +769,7 @@ Window {
 
                 NumberAnimation {
                     id: animation_altitude_indicator_val
-                    target: altitude_indicator_val
+                    target: altitude_indicator_value
                     property: "value"
                     from: 0
                     to: 1200
@@ -745,7 +841,7 @@ Window {
 
 
                     NumberAnimation {
-                        target: altitude_indicator_val
+                        target: altitude_indicator_value
                         property: "value"
                         from: 800
                         to: 1200
@@ -782,7 +878,7 @@ Window {
 
 
             NumberAnimation {
-                target: altitude_indicator_val
+                target: altitude_indicator_value
                 property: "value"
                 from: 800
                 to: 1200
@@ -831,7 +927,7 @@ Window {
                     duration: 1000
                 }
 
-               PropertyAnimation {
+                PropertyAnimation {
                     target: altitude_indicator_container
                     property: "y"
                     from: 50
@@ -840,14 +936,22 @@ Window {
                     easing.type: Easing.InQuart
                 }
 
-
                 NumberAnimation {
-                    target: altitude_indicator_val
+                    target: altitude_indicator_value
                     property: "value"
                     from: 1200
                     to: 0
                     duration: 15000
                     easing.type: Easing.InQuart
+                }
+
+                NumberAnimation {
+                    target: virtual_horizon_container
+                    property: "y"
+                    from: 100
+                    to: 200
+                    duration: 15000
+                    easing.type:Easing.InQuart
                 }
             }
         }
@@ -855,7 +959,7 @@ Window {
     }
 
     Text {
-        id: text1
+        id: status_key
         x: 10
         y: 15
         color: "#fbfbfb"
@@ -873,24 +977,36 @@ Window {
         font.bold: true
         font.pixelSize: 20
     }
+
+    Rectangle {
+        id: rectangle
+        x: 647
+        y: 10
+        width: 133
+        height: 29
+        color: "#090808"
+        border.color: "#f9f8f8"
+
+        MouseArea {
+            id: open_config
+            x: 0
+            y: 0
+            width: 133
+            height: 29
+            onClicked: informationProviderClass.openConfig()
+
+            Text {
+                id: text2
+                color: "#fbfbfb"
+                text: qsTr("Open Config")
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: 12
+            }
+        }
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*##^## Designer {
     D{i:1;anchors_height:460;anchors_width:780;anchors_x:10;anchors_y:10}
